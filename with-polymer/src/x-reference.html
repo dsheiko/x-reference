@@ -1,4 +1,60 @@
- (function( xtag ){
+
+
+    <link rel="import" href="../components/core-transition/core-transition-css.html">
+    <link rel="import" href="../components/core-overlay/core-overlay.html">
+
+    <style>
+
+      core-overlay {
+        overflow: auto;
+        color: black;
+        background: white;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        border-radius: 6px;
+        box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+        padding: 2rem;
+        font-size: 1.2rem;
+        width: 640px;
+        height: 480px;
+      }
+
+      core-overlay .container  {
+        margin: 0;
+        position: relative;
+      }
+      core-overlay .container .close-btn {
+        position: absolute;
+        border: 0;
+        background: transparent;
+        top: -1.8rem;
+        right: -1.8rem;
+        font-size: 1.8rem;
+        cursor: pointer;
+      }
+      core-overlay .content {
+        margin: 1.2rem 0;
+        display: inline;
+        font-style: italic;
+      }
+      core-overlay .content:before {
+        content: "\201C";
+      }
+      core-overlay .content:after {
+        content: "\201D - ";
+      }
+      a, a:visited, a:hover {
+        color: black;
+        text-decoration: underline;
+      }
+      </style>
+
+    <polymer-element name="x-reference">
+      <template>
+        <content></content>
+      </template>
+      <script>
+
+(function( Polymer ){
       /** @type {Node} */
   var document = window.document,
       /**
@@ -38,13 +94,11 @@
            * Render modal elementa into DOM
            */
           open: function() {
-            dialog = document.createElement( "x-modal" );
+            dialog = document.createElement( "core-overlay" );
             dialog.innerHTML = "<p>Loading...</p>";
             document.body.appendChild( dialog );
-            dialog.setAttribute( "hidden", "hidden" );
-            dialog.setAttribute( "overlay", "overlay" );
-            dialog.setAttribute( "overlay-tap-hide", "overlay-tap-hide" );
-            dialog.setAttribute( "transition", "transition" );
+            dialog.setAttribute( "layered", "layered" );
+            dialog.open();
           },
           /**
            * Show up the modal and populate it with given content
@@ -59,7 +113,6 @@
             dialog.querySelector( ".title" ).href = href;
             dialog.querySelector( ".title" ).innerHTML = title;
             dialog.querySelector( ".content" ).innerHTML = text;
-            dialog.show();
             dialog.querySelector( ".close-btn" ).addEventListener("click", this.handleClose.bind( this ), false );
           },
           /**
@@ -74,7 +127,7 @@
            * Hide modal
            */
           close: function(){
-            dialog.hide();
+            dialog.close();
             window.setTimeout(function(){
               document.body.removeChild( dialog );
             }, 500 );
@@ -101,7 +154,7 @@
           openModal: function() {
             var that = this,
                 modal = new ModalView();
-             modal.open();
+            modal.open();
              utils.get( node.getAttribute( "href" ), function(){
               var title = this.response.head.querySelector( "title" ).textContent || node.getAttribute( "href" ),
                   extract = node.getAttribute( "locator" ) ?
@@ -136,22 +189,14 @@
         };
       };
 
-    xtag.register('x-reference', {
-        extends: "a",
-        lifecycle: {
-          created: function() {
-            this.xtag.xreference = new xReferenceView( this );
-          }
-        },
-        events: {
-          'click': function( e ){
-            this.xtag.xreference.handleOnClick( e );
-          }
-        },
-        methods: {
-          'openModal': function(){
-            this.xtag.xreference.openModal();
-          }
+    Polymer( "x-reference", {
+        created: function () {
+          var xreference = new xReferenceView( this );
+          this.addEventListener( "click", xreference.handleOnClick.bind( xreference ), false );
         }
       });
-    }( xtag ));
+
+}( Polymer ));
+
+      </script>
+    </polymer-element>

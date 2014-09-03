@@ -38,13 +38,11 @@
            * Render modal elementa into DOM
            */
           open: function() {
-            dialog = document.createElement( "x-modal" );
+            dialog = document.createElement( "core-overlay" );
             dialog.innerHTML = "<p>Loading...</p>";
             document.body.appendChild( dialog );
-            dialog.setAttribute( "hidden", "hidden" );
-            dialog.setAttribute( "overlay", "overlay" );
-            dialog.setAttribute( "overlay-tap-hide", "overlay-tap-hide" );
-            dialog.setAttribute( "transition", "transition" );
+            dialog.setAttribute( "layered", "layered" );
+            dialog.open();
           },
           /**
            * Show up the modal and populate it with given content
@@ -54,12 +52,12 @@
            * @returns {undefined}
            */
           populate: function( title, href, text ){
+            this.render();
             dialog.innerHTML = "<div class=\"container\"><button class=\"close-btn\">&#10006;</button>" +
               "<div class=\"content\"></div><a target=\"_blank\" class=\"title\"></a></div>";
             dialog.querySelector( ".title" ).href = href;
             dialog.querySelector( ".title" ).innerHTML = title;
             dialog.querySelector( ".content" ).innerHTML = text;
-            dialog.show();
             dialog.querySelector( ".close-btn" ).addEventListener("click", this.handleClose.bind( this ), false );
           },
           /**
@@ -74,7 +72,7 @@
            * Hide modal
            */
           close: function(){
-            dialog.hide();
+            dialog.close();
             window.setTimeout(function(){
               document.body.removeChild( dialog );
             }, 500 );
@@ -101,7 +99,7 @@
           openModal: function() {
             var that = this,
                 modal = new ModalView();
-             modal.open();
+            modal.open();
              utils.get( node.getAttribute( "href" ), function(){
               var title = this.response.head.querySelector( "title" ).textContent || node.getAttribute( "href" ),
                   extract = node.getAttribute( "locator" ) ?

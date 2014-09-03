@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>X-REFERENCE DEMO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="../components/platform/platform.js"></script>
+    <link rel="import" href="../src/x-reference.html">
+
+    <style>
+      x-reference {
+        display: inline;
+      }
+    </style>
+
+  </head>
+  <body>
+    <p>
+      This web-component introduces a custom element `x-reference` that retrieves and displays a fragment of
+      a specified external resource matching given grep condition or selector
+    </p>
+    <p>
+      Checking general behaviour of the element: We are expected to obtain external resource fragment
+      <x-reference href="./dummy-ext-resource.html?rel=author&" locator="#cite">
+          <!-- Fallback -->
+          <a target="_blank" href="./dummy-ext-resource.html?rel=author">by locator</a>
+      </x-reference>
+      or
+      <x-reference href="./dummy-ext-resource.html?rel=author&" grep="(Lorem.+nulla\.)">
+          <!-- Fallback -->
+          <a target="_blank" href="./dummy-ext-resource.html?rel=author">by grep</a>
+      </x-reference>
+    </p>
+
+  </body>
+</html>
