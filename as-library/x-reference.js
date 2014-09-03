@@ -34,7 +34,13 @@
             /** @type Node */
         var dialog,
             /** @type Node */
-            backdrop;
+            backdrop,
+            /** @type Node */
+            title,
+             /** @type Node */
+            content,
+            /** @type Node */
+            closeBtn;
         return {
           /**
            * Render modal elementa into DOM
@@ -47,23 +53,38 @@
               "<div class=\"content\"></div><a target=\"_blank\" class=\"title\"></a></div>";
             document.body.appendChild( backdrop );
             document.body.appendChild( dialog );
+            title = dialog.querySelector( ".title" );
+            content = dialog.querySelector( ".content" );
+            closeBtn = dialog.querySelector( ".close-btn" );
           },
           /**
            * Show up the modal and populate it with given content
-           * @param {String} title
+           */
+          open: function(){
+            this.render();
+            dialog.querySelector( ".content" ).innerHTML = "Loading...";
+            title.classList.add( "is-hidden" );
+            closeBtn.classList.add( "is-hidden" );
+            window.setTimeout(function(){
+              dialog.classList.add( "is-visible" );
+              backdrop.classList.add( "is-visible" );
+            }, 0 );
+          },
+          /**
+           * Show up the modal and populate it with given content
+           * @param {String} titleTxt
            * @param {String} href
            * @param {String} text
-           * @returns {undefined}
            */
-          open: function( title, href, text ){
-            this.render();
-            dialog.querySelector( ".title" ).href = href;
-            dialog.querySelector( ".title" ).innerHTML = title;
-            dialog.querySelector( ".content" ).innerHTML = text;
-            dialog.setAttribute( "open", "open" );
-            backdrop.setAttribute( "open", "open" );
+          populate: function( titleTxt, href, text ){
+            title.href = href;
+            title.innerHTML = titleTxt;
+            content.innerHTML = text;
+            content.classList.add( "is-quoted" );
+            title.classList.remove( "is-hidden" );
+            closeBtn.classList.remove( "is-hidden" );
             dialog.hasOwnProperty( "show" ) && dialog.show();
-            dialog.querySelector( ".close-btn" ).addEventListener("click", this.handleClose.bind( this ), false );
+            closeBtn.addEventListener("click", this.handleClose.bind( this ), false );
           },
           /**
            * Handle close-btn click
@@ -77,8 +98,8 @@
            * Hide modal
            */
           close: function(){
-            dialog.removeAttribute( "open" );
-            backdrop.removeAttribute( "open" );
+            dialog.classList.remove( "is-visible" );
+            backdrop.classList.remove( "is-visible" );
             dialog.hasOwnProperty( "close" ) && dialog.close();
             window.setTimeout(function(){
               document.body.removeChild( backdrop );
@@ -111,14 +132,16 @@
            * Open modal with extract from external resource
            */
           openModal: function() {
-            var that = this;
+            var that = this,
+                modal = new ModalView();
+             modal.open();
              utils.get( node.getAttribute( "href" ), function(){
               var title = this.response.head.querySelector( "title" ).textContent || node.getAttribute( "href" ),
                   extract = node.getAttribute( "locator" ) ?
                 that.getFragmentByLocator( node.getAttribute( "locator" ), this.response ) :
                 that.getFragmentByGrep( node.getAttribute( "grep" ), this.response );
 
-              ( new ModalView() ).open( title, node.getAttribute( "href" ),
+              modal.populate( title, node.getAttribute( "href" ),
                 extract || "Nothing found" );
             });
           },

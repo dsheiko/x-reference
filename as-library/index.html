@@ -9,17 +9,30 @@
   </head>
   <body>
 
+    <p>
+      This library introduces a custom element `x-reference` that retrieves and displays a fragment of
+      a specified external resource matching given grep condition or selector
+    </p>
+    <p>
+      Checking general behaviour of the element: We are expected to obtain external resource fragment
+      <x-reference href="./dummy-ext-resource.html?rel=author&" locator="#cite">
+          <!-- Fallback -->
+          <a target="_blank" href="./dummy-ext-resource.html?rel=author">by locator</a>
+      </x-reference>
+      or
+      <x-reference href="./dummy-ext-resource.html?rel=author&" grep="(Lorem.+nulla\.)">
+          <!-- Fallback -->
+          <a target="_blank" href="./dummy-ext-resource.html?rel=author">by grep</a>
+      </x-reference>
+    </p>
+    <p>
+      Obviously, we cannot bypass Same-Origin Policy while accessing an arbitrary external resource with JavaScript. However we can do it via a proxy:
+      <x-reference href="./geturl.php?url=http://css-tricks.com/modular-future-web-components%3Frel%3Dauthor%26" grep="(That\'s a decent.+like\?)">
+          <!-- Fallback -->
+          <a target="_blank" href="http://css-tricks.com/modular-future-web-components">click me</a>
+      </x-reference>
+    </p>
 
-Obtaining external resource fragment
-<x-reference href="./dummy-ext-resource.html?rel=author&" locator="#cite">
-    <!-- Fallback -->
-    <a target="_blank" href="./dummy-ext-resource.html?rel=author">via locator</a>
-</x-reference>
-or
-<x-reference href="./dummy-ext-resource.html?rel=author&" grep="(Lorem.+nulla\.)">
-    <!-- Fallback -->
-    <a target="_blank" href="./dummy-ext-resource.html?rel=author">via grep</a>
-</x-reference>
 
   </body>
 </html>

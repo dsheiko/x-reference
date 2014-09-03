@@ -25,6 +25,9 @@ dialog {
   width: 640px;
   height: 480px;
 }
+dialog .is-hidden {
+  display: none;
+}
 dialog .container  {
   margin: 0;
   position: relative;
@@ -43,17 +46,17 @@ dialog .content {
   display: inline;
   font-style: italic;
 }
-dialog .content:before {
+dialog .is-quoted:before {
   content: "\201C";
 }
-dialog .content:after {
+dialog .is-quoted:after {
   content: "\201D - ";
 }
 a, a:visited, a:hover {
   color: black;
   text-decoration: underline;
 }
-dialog[open] {
+dialog.is-visible {
   display: block;
 }
 .backdrop {
@@ -65,7 +68,7 @@ dialog[open] {
   background-color: rgba(0, 0, 0, 0.6);
   display: none;
 }
-.backdrop[open] {
+.backdrop.is-visible {
   display: block;
 }
 
@@ -76,7 +79,7 @@ dialog[open] {
   opacity: 0;
   will-change: transform, opacity;
 }
-:root dialog[open] {
+:root dialog.is-visible {
   transform: scale(1,1);
   opacity: 1;
 }
