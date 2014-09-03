@@ -1,0 +1,29 @@
+{
+  "name": "x-reference",
+  "tagName": "x-modal",
+  "version": "0.0.1",
+  "author": "Dmitry Sheiko",
+  "description": "The reference element retrieves and displays a fragment of a specified external resource matching given grep condition or selector",
+  "images": [],
+  "categories": [
+    "structural"
+  ],
+  "demo": "demo/index.html",
+  "compatibility": {
+    "firefox": 5,
+    "chrome": 4,
+    "ie": 9,
+    "opera": 12,
+    "android": 2.1,
+    "ios": 4
+  },
+  "documentation": {
+    "description": "The reference element retrieves and displays a fragment of a specified external resource matching given grep condition or selector",
+    "events": {
+      "click": "Firing this event will cause the element to show up a modal with the content retrieved from external resource"
+    },
+    "methods": {
+      "openModal": "Show up a modal with the content retrieved from external resource"
+    }
+  }
+}

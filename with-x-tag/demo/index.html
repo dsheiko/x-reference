@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>X-REFERENCE DEMO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link type="text/css" rel="stylesheet" media="all" href="../x-tag/x-tag-components.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="../src/x-reference.css" />
+
+
+    <script src="../x-tag/x-tag-components.js"> </script>
+    <script src="../src/x-reference.js"> </script>
+
+  </head>
+  <body>
+    <p>This web-component introduces a custom element `x-reference` that retrieves and displays a fragment of
+      a specified external resource matching given grep condition or selector</p>
+    <p>
+Checking general behaviour of the element: We are expected to obtain external resource fragment
+<x-reference href="./dummy-ext-resource.html?rel=author&" locator="#cite">
+    <!-- Fallback -->
+    <a target="_blank" href="./dummy-ext-resource.html?rel=author">by locator</a>
+</x-reference>
+or
+<x-reference href="./dummy-ext-resource.html?rel=author&" grep="(Lorem.+nulla\.)">
+    <!-- Fallback -->
+    <a target="_blank" href="./dummy-ext-resource.html?rel=author">by grep</a>
+</x-reference>
+</p>
+<p>
+Checking exposed element API: This <a href="#" id="trigger">link</a> is supposed to open modal associated with the first `x-reference` element.
+</p>
+  <script>
+    (function(){
+      document.getElementById( "trigger" ).addEventListener( "click", function( e ){
+        e.preventDefault();
+        document.querySelector( "x-reference" ).openModal();
+      }, false );
+    }());
+  </script>
+
+  </body>
+</html>

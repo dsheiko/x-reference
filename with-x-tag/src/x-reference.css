@@ -1,0 +1,49 @@
+@charset "utf-8";
+html, body {
+  height: 100%;
+}
+x-reference {
+  display: inline;
+}
+
+x-modal {
+  overflow: auto;
+  color: black;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  padding: 2rem;
+  font-size: 1.2rem;
+  width: 640px;
+  height: 480px;
+}
+
+x-modal .container  {
+  margin: 0;
+  position: relative;
+}
+x-modal .container .close-btn {
+  position: absolute;
+  border: 0;
+  background: transparent;
+  top: -1.8rem;
+  right: -1.8rem;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+x-modal .content {
+  margin: 1.2rem 0;
+  display: inline;
+  font-style: italic;
+}
+x-modal .content:before {
+  content: "\201C";
+}
+x-modal .content:after {
+  content: "\201D - ";
+}
+a, a:visited, a:hover {
+  color: black;
+  text-decoration: underline;
+}

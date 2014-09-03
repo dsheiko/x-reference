@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>X-REFERENCE DEMO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./x-reference.js"> </script>
+    <link type="text/css" rel="stylesheet" media="all" href="./x-reference.css" />
+  </head>
+  <body>
+
+
+Obtaining external resource fragment
+<x-reference href="./dummy-ext-resource.html?rel=author&" locator="#cite">
+    <!-- Fallback -->
+    <a target="_blank" href="./dummy-ext-resource.html?rel=author">via locator</a>
+</x-reference>
+or
+<x-reference href="./dummy-ext-resource.html?rel=author&" grep="(Lorem.+nulla\.)">
+    <!-- Fallback -->
+    <a target="_blank" href="./dummy-ext-resource.html?rel=author">via grep</a>
+</x-reference>
+
+  </body>
+</html>

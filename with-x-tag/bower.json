@@ -1,0 +1,19 @@
+{
+  "name": "x-reference",
+  "description": "This web-component retrieves and displays a fragment of a specified external resource matching given grep condition or selector",
+  "version": "0.0.1",
+  "keywords": [
+    "element",
+    "web-components",
+    "x-tag"
+  ],
+  "main": [
+    "src/x-reference.js",
+    "src/x-reference.css"
+  ],
+  "dependencies": {
+    "x-tag-core": "*",
+    "x-modal": "*",
+    "brick-common": "*"
+  }
+}

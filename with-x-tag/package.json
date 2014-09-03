@@ -1,0 +1,12 @@
+{
+  "name": "x-reference",
+  "version": "0.0.1",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/x-tag/modal.git"
+  }
+}
