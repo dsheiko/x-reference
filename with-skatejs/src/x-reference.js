@@ -32,33 +32,59 @@
        */
       ModalView = function(){
             /** @type Node */
-        var dialog;
+        var dialog,
+            /** @type Node */
+            backdrop,
+            /** @type Node */
+            title,
+             /** @type Node */
+            content,
+            /** @type Node */
+            closeBtn;
         return {
           /**
            * Render modal elementa into DOM
            */
-          open: function() {
-            dialog = document.createElement( "core-overlay" );
-            dialog.innerHTML = "<p>Loading...</p>";
+          render: function() {
+            backdrop = document.createElement( "div" );
+            dialog = document.createElement( "dialog" );
+            backdrop.className = "backdrop";
+            dialog.innerHTML = "<div class=\"container\"><button class=\"close-btn\">&#10006;</button>" +
+              "<div class=\"content\"></div><a target=\"_blank\" class=\"title\"></a></div>";
+            document.body.appendChild( backdrop );
             document.body.appendChild( dialog );
-            dialog.setAttribute( "layered", "layered" );
-            dialog.open();
+            title = dialog.querySelector( ".title" );
+            content = dialog.querySelector( ".content" );
+            closeBtn = dialog.querySelector( ".close-btn" );
           },
           /**
            * Show up the modal and populate it with given content
-           * @param {String} title
+           */
+          open: function(){
+            this.render();
+            dialog.querySelector( ".content" ).innerHTML = "Loading...";
+            title.classList.add( "is-hidden" );
+            closeBtn.classList.add( "is-hidden" );
+            window.setTimeout(function(){
+              dialog.classList.add( "is-visible" );
+              backdrop.classList.add( "is-visible" );
+            }, 0 );
+          },
+          /**
+           * Show up the modal and populate it with given content
+           * @param {String} titleTxt
            * @param {String} href
            * @param {String} text
-           * @returns {undefined}
            */
-          populate: function( title, href, text ){
-            this.render();
-            dialog.innerHTML = "<div class=\"container\"><button class=\"close-btn\">&#10006;</button>" +
-              "<div class=\"content\"></div><a target=\"_blank\" class=\"title\"></a></div>";
-            dialog.querySelector( ".title" ).href = href;
-            dialog.querySelector( ".title" ).innerHTML = title;
-            dialog.querySelector( ".content" ).innerHTML = text;
-            dialog.querySelector( ".close-btn" ).addEventListener("click", this.handleClose.bind( this ), false );
+          populate: function( titleTxt, href, text ){
+            title.href = href;
+            title.innerHTML = titleTxt;
+            content.innerHTML = text;
+            content.classList.add( "is-quoted" );
+            title.classList.remove( "is-hidden" );
+            closeBtn.classList.remove( "is-hidden" );
+            dialog.hasOwnProperty( "show" ) && dialog.show();
+            closeBtn.addEventListener("click", this.handleClose.bind( this ), false );
           },
           /**
            * Handle close-btn click
@@ -72,8 +98,11 @@
            * Hide modal
            */
           close: function(){
-            dialog.close();
+            dialog.classList.remove( "is-visible" );
+            backdrop.classList.remove( "is-visible" );
+            dialog.hasOwnProperty( "close" ) && dialog.close();
             window.setTimeout(function(){
+              document.body.removeChild( backdrop );
               document.body.removeChild( dialog );
             }, 500 );
           }
@@ -99,7 +128,7 @@
           openModal: function() {
             var that = this,
                 modal = new ModalView();
-            modal.open();
+             modal.open();
              utils.get( node.getAttribute( "href" ), function(){
               var title = this.response.head.querySelector( "title" ).textContent || node.getAttribute( "href" ),
                   extract = node.getAttribute( "locator" ) ?
@@ -134,22 +163,20 @@
         };
       };
 
-    xtag.register('x-reference', {
-        extends: "a",
-        lifecycle: {
-          created: function() {
-            this.xtag.xreference = new xReferenceView( this );
-          }
-        },
+      skate('x-reference', {
+        insert: function( el ) {
+          el.xreference = new xReferenceView( el );
+        }
+        ,
         events: {
-          'click': function( e ){
-            this.xtag.xreference.handleOnClick( e );
+          "click": function ( el, e ) {
+            el.xreference.handleOnClick( e );
           }
         },
-        methods: {
-          'openModal': function(){
-            this.xtag.xreference.openModal();
+        prototype: {
+          openModal: function () {
+            this.xreference.openModal();
           }
         }
       });
-    }( xtag ));
+    }( skate ));

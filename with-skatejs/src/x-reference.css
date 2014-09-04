@@ -1,0 +1,85 @@
+@charset "utf-8";
+html, body {
+  height: 100%;
+}
+x-reference {
+  display: inline;
+}
+dialog {
+  display: none;
+  vertical-align: middle;
+  position: absolute;
+  top: 50%;
+  margin-top: -250px;
+  left: 50%;
+  margin-left: -320px;
+  box-sizing: border-box;
+  overflow: auto;
+  color: black;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  padding: 2rem;
+  font-size: 1.2rem;
+  width: 640px;
+  height: 480px;
+}
+dialog .is-hidden {
+  display: none;
+}
+dialog .container  {
+  margin: 0;
+  position: relative;
+}
+dialog .container .close-btn {
+  position: absolute;
+  border: 0;
+  background: transparent;
+  top: -1.8rem;
+  right: -1.8rem;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+dialog .content {
+  margin: 1.2rem 0;
+  display: inline;
+  font-style: italic;
+}
+dialog .is-quoted:before {
+  content: "\201C";
+}
+dialog .is-quoted:after {
+  content: "\201D - ";
+}
+a, a:visited, a:hover {
+  color: black;
+  text-decoration: underline;
+}
+dialog.is-visible {
+  display: block;
+}
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+}
+.backdrop.is-visible {
+  display: block;
+}
+
+:root dialog {
+  display: block;
+  transition: transform 0.3s cubic-bezier(0.5, -0.5, 0.5, 1.5), opacity 0.3s cubic-bezier(0.5, -0.5, 0.5, 1.5);
+  transform: scale(0,0);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+:root dialog.is-visible {
+  transform: scale(1,1);
+  opacity: 1;
+}
