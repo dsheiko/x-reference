@@ -1,0 +1,18 @@
+{
+  "name": "x-reference",
+  "description": "This web-component retrieves and displays a fragment of a specified external resource matching given grep condition or selector",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "src/x-reference.html",
+  "keywords": [
+    "web-components"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "platform": "Polymer/platform#~0.3.3"
+  }
+}
