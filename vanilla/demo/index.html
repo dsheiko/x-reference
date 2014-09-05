@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link type="text/css" rel="stylesheet" media="all" href="../src/x-reference.css" />
+    <!-- Importing Web Component's Polyfill -->
+    <script src="../bower_components/platform/platform.js"></script>
 
-
-    <script src="../bower_components/skatejs/dist/skate.min.js"> </script>
-    <script src="../src/x-reference.js"> </script>
+    <!-- Importing Custom Elements -->
+    <link rel="import" href="../src/x-reference.html">
 
   </head>
   <body>
@@ -27,6 +27,13 @@
       <x-reference href="./dummy-ext-resource.html?rel=author&" grep="(Lorem.+nulla\.)">
           <!-- Fallback -->
           <a target="_blank" href="./dummy-ext-resource.html?rel=author">by grep</a>
+      </x-reference>
+    </p>
+    <p>
+      Obviously, we cannot bypass Same-Origin Policy while accessing an arbitrary external resource with JavaScript. However we can do it via a proxy:
+      <x-reference href="../../proxy.php?url=http://css-tricks.com/modular-future-web-components%3Frel%3Dauthor%26" grep="(That\'s a decent.+like\?)">
+          <!-- Fallback -->
+          <a target="_blank" href="http://css-tricks.com/modular-future-web-components">click me</a>
       </x-reference>
     </p>
     <p>

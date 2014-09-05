@@ -1,24 +1,17 @@
-# &lt;my-repo&gt;
+## Overview
 
-> A bare minimum custom element starter-kit using [VanillaJS](http://vanilla-js.com/).
->
-> Like [Yeoman](http://yeoman.io/)? Use the [generator-element](https://www.npmjs.org/package/generator-element) instead.
->
-> Looking for a working example? Check [hello-world-element](https://github.com/webcomponents/hello-world-element).
-
-## Demo
-
-[Check it live!](http://my-user.github.io/my-repo)
+This web-component introduces a custom element `x-reference` that retrieves and displays a fragment of
+a specified external resource matching given grep condition or selector
 
 ## Install
 
 Install the component using [Bower](http://bower.io/):
 
 ```sh
-$ bower install my-repo --save
+$ bower install dsheiko/x-reference --save
 ```
 
-Or [download as ZIP](https://github.com/my-user/my-repo/archive/master.zip).
+Or [download as ZIP](https://github.com/dsheiko/x-reference).
 
 ## Usage
 
@@ -31,60 +24,37 @@ Or [download as ZIP](https://github.com/my-user/my-repo/archive/master.zip).
 2. Import Custom Element:
 
     ```html
-    <link rel="import" href="bower_components/my-repo/src/my-element.html">
+    <link rel="import" href="../src/x-reference.html">
     ```
 
 3. Start using it!
 
+    You can extract a fragment by CSS selector:
     ```html
-    <my-element></my-element>
+    <x-reference href="url-address" locator="a-CSS-selector">
+        Text content
+    </x-reference>
+    ```
+    or you can use a regexp condition:
+    ```html
+    <x-reference href="url-address" grep="reg-exp">
+        Text content
+    </x-reference>
     ```
 
-## Options
-
-Attribute     | Options     | Default      | Description
----           | ---         | ---          | ---
-`foo`         | *string*    | `bar`        | Lorem ipsum dolor.
 
 ## Methods
 
 Method        | Parameters   | Returns     | Description
 ---           | ---          | ---         | ---
-`unicorn()`   | None.        | Nothing.    | Magic stuff appears.
+`openModal`   | None         | void        | Implicit request for showing the fragment.
 
 ## Events
 
 Event         | Description
 ---           | ---
-`onsomething` | Triggers when something happens.
+`click`       | Retrieve and show a modal with fragment
 
-## Development
-
-In order to run it locally you'll need to fetch some dependencies and a basic server setup.
-
-* Install [Bower](http://bower.io/) & [Grunt](http://gruntjs.com/):
-
-    ```sh
-    $ [sudo] npm install -g bower grunt-cli
-    ```
-
-* Install local dependencies:
-
-    ```sh
-    $ bower install && npm install
-    ```
-
-* To test your project, start the development server and open `http://localhost:8000`.
-
-    ```sh
-    $ grunt server
-    ```
-
-* To provide a live demo, send everything to `gh-pages` branch.
-
-    ```sh
-    $ grunt deploy
-    ```
 
 ## Contributing
 
@@ -94,10 +64,8 @@ In order to run it locally you'll need to fetch some dependencies and a basic se
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request :D
 
-## History
-
-For detailed changelog, check [Releases](https://github.com/my-user/my-repo/releases).
 
 ## License
 
 [MIT License](http://opensource.org/licenses/MIT)
+

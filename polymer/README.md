@@ -24,7 +24,7 @@ Or [download as ZIP](https://github.com/dsheiko/x-reference).
 2. Import Custom Element:
 
     ```html
-    <link rel="import" href="bower_components/my-repo/dist/my-element.html">
+    <link rel="import" href="../src/x-reference.html">
     ```
 
 3. Start using it!
