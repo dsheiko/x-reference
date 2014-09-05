@@ -32,6 +32,24 @@
           <a target="_blank" href="./dummy-ext-resource.html?rel=author">by grep</a>
       </x-reference>
     </p>
+    <p>
+      Obviously, we cannot bypass Same-Origin Policy while accessing an arbitrary external resource with JavaScript. However we can do it via a proxy:
+      <x-reference href="../../proxy.php?url=http://css-tricks.com/modular-future-web-components%3Frel%3Dauthor%26" grep="(That\'s a decent.+like\?)">
+          <!-- Fallback -->
+          <a target="_blank" href="http://css-tricks.com/modular-future-web-components">click me</a>
+      </x-reference>
+    </p>
+    <p>
+      Checking exposed element API: This <a href="#" id="trigger">link</a> is supposed to open modal associated with the first `x-reference` element.
+    </p>
+    <script>
+    (function(){
+      document.getElementById( "trigger" ).addEventListener( "click", function( e ){
+        e.preventDefault();
+        document.querySelector( "x-reference" ).openModal();
+      }, false );
+    }());
+  </script>
 
   </body>
 </html>

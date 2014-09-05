@@ -1,4 +1,95 @@
+<!-- Import X-Tag -->
+<script src="../bower_components/x-tag-core/src/core.js"></script>
+
+<style>
+  html, body {
+  height: 100%;
+  }
+  x-reference {
+    display: inline;
+  }
+  dialog {
+    display: none;
+    vertical-align: middle;
+    position: absolute;
+    top: 50%;
+    margin-top: -250px;
+    left: 50%;
+    margin-left: -320px;
+    box-sizing: border-box;
+    overflow: auto;
+    color: black;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    padding: 2rem;
+    font-size: 1.2rem;
+    width: 640px;
+    height: 480px;
+  }
+  dialog .is-hidden {
+    display: none;
+  }
+  dialog .container  {
+    margin: 0;
+    position: relative;
+  }
+  dialog .container .close-btn {
+    position: absolute;
+    border: 0;
+    background: transparent;
+    top: -1.8rem;
+    right: -1.8rem;
+    font-size: 1.8rem;
+    cursor: pointer;
+  }
+  dialog .content {
+    margin: 1.2rem 0;
+    display: inline;
+    font-style: italic;
+  }
+  dialog .is-quoted:before {
+    content: "\201C";
+  }
+  dialog .is-quoted:after {
+    content: "\201D - ";
+  }
+  a, a:visited, a:hover {
+    color: black;
+    text-decoration: underline;
+  }
+  dialog.is-visible {
+    display: block;
+  }
+  .backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+  }
+  .backdrop.is-visible {
+    display: block;
+  }
+
+  :root dialog {
+    display: block;
+    transition: transform 0.3s cubic-bezier(0.5, -0.5, 0.5, 1.5), opacity 0.3s cubic-bezier(0.5, -0.5, 0.5, 1.5);
+    transform: scale(0,0);
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+  :root dialog.is-visible {
+    transform: scale(1,1);
+    opacity: 1;
+  }
+</style>
+<script>
  (function( xtag ){
+
       /** @type {Node} */
   var document = window.document,
       /**
@@ -32,35 +123,59 @@
        */
       ModalView = function(){
             /** @type Node */
-        var dialog;
+        var dialog,
+            /** @type Node */
+            backdrop,
+            /** @type Node */
+            title,
+             /** @type Node */
+            content,
+            /** @type Node */
+            closeBtn;
         return {
           /**
            * Render modal elementa into DOM
            */
-          open: function() {
-            dialog = document.createElement( "x-modal" );
-            dialog.innerHTML = "<p>Loading...</p>";
+          render: function() {
+            backdrop = document.createElement( "div" );
+            dialog = document.createElement( "dialog" );
+            backdrop.className = "backdrop";
+            dialog.innerHTML = "<div class=\"container\"><button class=\"close-btn\">&#10006;</button>" +
+              "<div class=\"content\"></div><a target=\"_blank\" class=\"title\"></a></div>";
+            document.body.appendChild( backdrop );
             document.body.appendChild( dialog );
-            dialog.setAttribute( "hidden", "hidden" );
-            dialog.setAttribute( "overlay", "overlay" );
-            dialog.setAttribute( "overlay-tap-hide", "overlay-tap-hide" );
-            dialog.setAttribute( "transition", "transition" );
+            title = dialog.querySelector( ".title" );
+            content = dialog.querySelector( ".content" );
+            closeBtn = dialog.querySelector( ".close-btn" );
           },
           /**
            * Show up the modal and populate it with given content
-           * @param {String} title
+           */
+          open: function(){
+            this.render();
+            dialog.querySelector( ".content" ).innerHTML = "Loading...";
+            title.classList.add( "is-hidden" );
+            closeBtn.classList.add( "is-hidden" );
+            window.setTimeout(function(){
+              dialog.classList.add( "is-visible" );
+              backdrop.classList.add( "is-visible" );
+            }, 0 );
+          },
+          /**
+           * Show up the modal and populate it with given content
+           * @param {String} titleTxt
            * @param {String} href
            * @param {String} text
-           * @returns {undefined}
            */
-          populate: function( title, href, text ){
-            dialog.innerHTML = "<div class=\"container\"><button class=\"close-btn\">&#10006;</button>" +
-              "<div class=\"content\"></div><a target=\"_blank\" class=\"title\"></a></div>";
-            dialog.querySelector( ".title" ).href = href;
-            dialog.querySelector( ".title" ).innerHTML = title;
-            dialog.querySelector( ".content" ).innerHTML = text;
-            dialog.show();
-            dialog.querySelector( ".close-btn" ).addEventListener("click", this.handleClose.bind( this ), false );
+          populate: function( titleTxt, href, text ){
+            title.href = href;
+            title.innerHTML = titleTxt;
+            content.innerHTML = text;
+            content.classList.add( "is-quoted" );
+            title.classList.remove( "is-hidden" );
+            closeBtn.classList.remove( "is-hidden" );
+            dialog.hasOwnProperty( "show" ) && dialog.show();
+            closeBtn.addEventListener("click", this.handleClose.bind( this ), false );
           },
           /**
            * Handle close-btn click
@@ -74,8 +189,11 @@
            * Hide modal
            */
           close: function(){
-            dialog.hide();
+            dialog.classList.remove( "is-visible" );
+            backdrop.classList.remove( "is-visible" );
+            dialog.hasOwnProperty( "close" ) && dialog.close();
             window.setTimeout(function(){
+              document.body.removeChild( backdrop );
               document.body.removeChild( dialog );
             }, 500 );
           }
@@ -136,8 +254,8 @@
         };
       };
 
-    xtag.register('x-reference', {
-        extends: "a",
+
+    xtag.register( "x-reference", {
         lifecycle: {
           created: function() {
             this.xtag.xreference = new xReferenceView( this );
@@ -155,3 +273,4 @@
         }
       });
     }( xtag ));
+</script>

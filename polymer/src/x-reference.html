@@ -191,8 +191,11 @@
 
     Polymer( "x-reference", {
         created: function () {
-          var xreference = new xReferenceView( this );
-          this.addEventListener( "click", xreference.handleOnClick.bind( xreference ), false );
+          this.xreference = new xReferenceView( this );
+          this.addEventListener( "click", this.xreference.handleOnClick.bind( this.xreference ), false );
+        },
+        openModal: function() {
+          this.xreference.openModal();
         }
       });
 

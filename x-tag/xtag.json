@@ -1,6 +1,6 @@
 {
   "name": "x-reference",
-  "tagName": "x-modal",
+  "tagName": "x-reference",
   "version": "0.0.1",
   "author": "Dmitry Sheiko",
   "description": "The reference element retrieves and displays a fragment of a specified external resource matching given grep condition or selector",

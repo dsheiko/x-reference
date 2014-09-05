@@ -13,8 +13,7 @@
     "src/x-reference.css"
   ],
   "dependencies": {
-    "x-tag-core": "*",
-    "modal": "x-tag/modal",
-    "brick-common": "*"
+    "platform": "Polymer/platform#~0.3.3",
+    "x-tag-core": "~0.9.7"
   }
 }
