@@ -1,2 +1,6 @@
 node_modules
-with-polymer/components
+bower_components
+skate/bower_components
+vanilla/bower_components
+polymer/bower_components
+x-tag/bower_components
