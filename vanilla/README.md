@@ -5,13 +5,7 @@ a specified external resource matching given grep condition or selector
 
 ## Install
 
-Install the component using [Bower](http://bower.io/):
-
-```sh
-$ bower install dsheiko/x-reference --save
-```
-
-Or [download as ZIP](https://github.com/dsheiko/x-reference).
+[download as ZIP](https://github.com/dsheiko/x-reference).
 
 ## Usage
 

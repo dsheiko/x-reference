@@ -9,8 +9,7 @@
     "x-tag"
   ],
   "main": [
-    "src/x-reference.js",
-    "src/x-reference.css"
+    "src/x-reference.html"
   ],
   "dependencies": {
     "platform": "Polymer/platform#~0.3.3",
